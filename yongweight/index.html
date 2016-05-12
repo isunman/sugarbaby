@@ -1,0 +1,66 @@
+<html>
+<head>
+
+<title>JSChart</title>
+
+<script type="text/javascript" src="./jscharts.js"></script>
+
+</head>
+<body>
+
+<div id="graph">Loading graph...</div>
+
+<script type="text/javascript">
+	var myData = new Array([2005, 75.2], [2006, 79.5], [2007, 80.2], [2008, 82.8], [2009, 84.6], [2010, 88.9], [2011, 92.5], [2012, 91.5], [2013, 95.4], [2014, 93.8], [2015, 114.5], [2016, 111.3]);
+	var myChart = new JSChart('graph', 'line');
+	myChart.setDataArray(myData);
+	myChart.setTitle("Yong's Weight");
+	myChart.setTitleColor('#8E8E8E');
+	myChart.setTitleFontSize(11);
+	myChart.setAxisNameX('');
+	myChart.setAxisNameY('');
+	myChart.setAxisColor('#8420CA');
+	myChart.setAxisValuesColor('#949494');
+	myChart.setAxisPaddingLeft(100);
+	myChart.setAxisPaddingRight(120);
+	myChart.setAxisPaddingTop(50);
+	myChart.setAxisPaddingBottom(40);
+	myChart.setAxisValuesDecimals(1);
+	myChart.setAxisValuesNumberX(12);
+	myChart.setShowXValues(false);
+	myChart.setGridColor('#C5A2DE');
+	myChart.setLineColor('#BBBBBB');
+	myChart.setLineWidth(2);
+	myChart.setFlagColor('#9D12FD');
+	myChart.setFlagRadius(4);
+	myChart.setTooltip([2005, 'Weight 75.2']);
+	myChart.setTooltip([2006, 'Weight 79.5']);
+	myChart.setTooltip([2007, 'Weight 80.2']);
+	myChart.setTooltip([2008, 'Weight 82.8']);
+	myChart.setTooltip([2009, 'Weight 84.6']);
+	myChart.setTooltip([2010, 'Weight 88.9']);
+	myChart.setTooltip([2011, 'Weight 92.5']);
+	myChart.setTooltip([2012, 'Weight 91.5']);
+	myChart.setTooltip([2013, 'Weight 93.0']);
+	myChart.setTooltip([2014, 'Weight 93.8']);
+	myChart.setTooltip([2015, 'Weight 114.5']);
+	myChart.setTooltip([2016, 'Weight 111.3']);
+	myChart.setLabelX([2005, '2005']);
+	myChart.setLabelX([2006, '2006']);
+	myChart.setLabelX([2007, '2007']);
+	myChart.setLabelX([2008, '2008']);
+	myChart.setLabelX([2009, '2009']);
+	myChart.setLabelX([2010, '2010']);
+	myChart.setLabelX([2011, '2011']);
+	myChart.setLabelX([2012, '2012']);
+	myChart.setLabelX([2013, '2013']);
+	myChart.setLabelX([2014, '2014']);
+	myChart.setLabelX([2015, '2015']);
+	myChart.setLabelX([2016, '2016']);
+	myChart.setSize(616, 321);
+	myChart.setBackgroundImage('chart_bg.jpg');
+	myChart.draw();
+</script>
+
+</body>
+</html>
