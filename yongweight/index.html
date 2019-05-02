@@ -1,66 +1,133 @@
-<html>
+<!DOCTYPE html>
+<html style="height: 100%">
 <head>
-
-<title>JSChart</title>
-
-<script type="text/javascript" src="./jscharts.js"></script>
-
+    <meta charset="utf-8">
+    <title>Yong's Weight</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
 </head>
 <body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 900px;height:600px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
 
-<div id="graph">Loading graph...</div>
+        option = {
+    grid:{
+        left:'8%',
+        right:'8%'
+    },
+      dataZoom: [
+          {
+                start:0,
+                end:100,
+            }, 
+            {
+                type: 'inside'
+            }],
 
-<script type="text/javascript">
-	var myData = new Array([2005, 75.2], [2006, 79.5], [2007, 80.2], [2008, 82.8], [2009, 84.6], [2010, 88.9], [2011, 92.5], [2012, 91.5], [2013, 95.4], [2014, 93.8], [2015, 114.5], [2016, 111.3]);
-	var myChart = new JSChart('graph', 'line');
-	myChart.setDataArray(myData);
-	myChart.setTitle("Yong's Weight");
-	myChart.setTitleColor('#8E8E8E');
-	myChart.setTitleFontSize(11);
-	myChart.setAxisNameX('');
-	myChart.setAxisNameY('');
-	myChart.setAxisColor('#8420CA');
-	myChart.setAxisValuesColor('#949494');
-	myChart.setAxisPaddingLeft(100);
-	myChart.setAxisPaddingRight(120);
-	myChart.setAxisPaddingTop(50);
-	myChart.setAxisPaddingBottom(40);
-	myChart.setAxisValuesDecimals(1);
-	myChart.setAxisValuesNumberX(12);
-	myChart.setShowXValues(false);
-	myChart.setGridColor('#C5A2DE');
-	myChart.setLineColor('#BBBBBB');
-	myChart.setLineWidth(2);
-	myChart.setFlagColor('#9D12FD');
-	myChart.setFlagRadius(4);
-	myChart.setTooltip([2005, 'Weight 75.2']);
-	myChart.setTooltip([2006, 'Weight 79.5']);
-	myChart.setTooltip([2007, 'Weight 80.2']);
-	myChart.setTooltip([2008, 'Weight 82.8']);
-	myChart.setTooltip([2009, 'Weight 84.6']);
-	myChart.setTooltip([2010, 'Weight 88.9']);
-	myChart.setTooltip([2011, 'Weight 92.5']);
-	myChart.setTooltip([2012, 'Weight 91.5']);
-	myChart.setTooltip([2013, 'Weight 93.0']);
-	myChart.setTooltip([2014, 'Weight 93.8']);
-	myChart.setTooltip([2015, 'Weight 114.5']);
-	myChart.setTooltip([2016, 'Weight 111.3']);
-	myChart.setLabelX([2005, '2005']);
-	myChart.setLabelX([2006, '2006']);
-	myChart.setLabelX([2007, '2007']);
-	myChart.setLabelX([2008, '2008']);
-	myChart.setLabelX([2009, '2009']);
-	myChart.setLabelX([2010, '2010']);
-	myChart.setLabelX([2011, '2011']);
-	myChart.setLabelX([2012, '2012']);
-	myChart.setLabelX([2013, '2013']);
-	myChart.setLabelX([2014, '2014']);
-	myChart.setLabelX([2015, '2015']);
-	myChart.setLabelX([2016, '2016']);
-	myChart.setSize(616, 321);
-	myChart.setBackgroundImage('chart_bg.jpg');
-	myChart.draw();
-</script>
+        tooltip: {
+            trigger: 'axis',
+        },
+        xAxis: {
+            type: 'category',
+            // name: 'shi',
+            axisTick:{
+                alignWithLabel:true,
+                interval:0
+            },
+            // nameLocation:'bottom',
+            splitLine: {show: false},
+            data: ['2005', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+        },
 
+        yAxis: {
+            type: 'value',
+            min:70,
+            max:120,
+            axisLabel:{
+                show:true
+            },
+            interval:10,
+            // name: 'y'
+        },
+        visualMap: {
+                top: 10,
+                right: 10,
+                textGap:5,
+                itemWidth:15,
+                show:true,
+                orient:'horizontal',
+                left:'center',
+             pieces: [
+                 {
+                    gt: 60,
+                    lte: 82,
+                    color: 'lightskyblue'
+                },{
+                    gt: 82,
+                    lte: 98,
+                    color: '#096'
+                }, {
+                    gt: 98,
+                    lte: 114,
+                    color: '#cc0033'
+                }, {
+                    gt: 114,
+                    lte: 131,
+                    color: '#ff9933'
+                }, 
+                {
+                    gt: 131,
+                    color: '#7e0023'
+                }
+                ],
+            },
+        series: [
+            {
+                name: '体重KG',
+                type: 'line',
+                smooth:true,
+                lineStyle:{
+                    normal:{type:'solid'}
+                },
+                markPoint:{
+                    data:[
+                        {name:'最大值',type:'max'},
+                        {name:"最小值",'type':'min'}
+                    ]
+                },
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 75
+                    },{
+                        yAxis: 80
+                    }, {
+                        yAxis: 85
+                    }, {
+                        yAxis: 90
+                    }, {
+                        yAxis: 95
+                    }, {
+                        yAxis:100
+                    }, {
+                        yAxis:105
+                    }, {
+                        yAxis:110
+                    }, {
+                        yAxis:115
+                    }]
+                },
+                data: [75, 79, 80, 83.5, 89, 92.5, 91.8, 95.5, 94, 114, 112, 108, 105, 98]
+            },
+        ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
 </body>
 </html>
