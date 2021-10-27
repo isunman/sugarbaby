@@ -8,8 +8,8 @@
 </head>
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 1000px;height:600px;"></div>
-    <div style="margin-top:30px;">历年体重<div>2019年 平均：99.78 <a href="./weightstat2019.png" target="_blank">全年体重变化曲线图</a></div><div>2018年 平均：106.13</div><div>2017年 平均：109.88</div></div>
+    <div id="main" style="width: 1200px;height:600px;"></div>
+    <div style="margin-top:30px;">历年体重<div>2021年 平均：106.65（截至2021-11-27）</div><div>2020年 平均：103.40</div><div>2019年 平均：99.78 <a href="./weightstat2019.png" target="_blank">全年体重变化曲线图</a></div><div>2018年 平均：106.13</div><div>2017年 平均：109.88</div></div>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
@@ -40,7 +40,7 @@
             },
             // nameLocation:'bottom',
             splitLine: {show: false},
-            data: ['2005', '2006',  '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
+            data: ['2005', '2006',  '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021']
         },
 
         yAxis: {
@@ -121,7 +121,7 @@
                         yAxis:115
                     }]
                 },
-                data: [75, 78, 79, 80, 83.5, 89, 92.5, 91.8, 95.5, 94, 114, 112, 108, 105, 98, 90]
+                data: [75, 78, 79, 80, 83.5, 89, 92.5, 91.8, 95.5, 94, 114, 112, 109.88, 106.13, 99.78, 103.4, 106.65]
             },
         ]
         };
