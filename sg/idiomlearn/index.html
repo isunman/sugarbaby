@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思涵趣味成语学习游戏</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+        }
+
+        .title {
+            font-size: 36px;
+            color: #1a365d;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+        }
+
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e8e8e8;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #1890ff;
+            transition: width 0.3s ease;
+        }
+
+        .score {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1890ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .option:hover {
+            background-color: #40a9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .option:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            font-size: 24px;
+            margin-bottom: 20px;
+            min-height: 30px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .correct {
+            color: #52c41a;
+        }
+
+        .incorrect {
+            color: #f5222d;
+        }
+
+        .next-button {
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .next-button:hover {
+            background-color: #73d13d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .audio-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .restart-button {
+            background-color: #722ed1;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            margin-top: 20px;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .restart-button:hover {
+            background-color: #8c51e0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">趣味成语学习游戏</div>
+    <div class="instructions">
+        <h3>游戏玩法：</h3>
+        <p>1. 每轮游戏共10个题目，每题10分，满分100分</p>
+        <p>2. 根据成语的含义选择正确的答案</p>
+        <p>3. 答对加10分，答错不扣分</p>
+        <p>4. 每次开始都会随机抽取不同的题目，让我们开始吧！</p>
+    </div>
+    <div class="game-container">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="score">得分：<span id="score">0</span></div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <button class="next-button" id="nextButton">下一题</button>
+        <button class="restart-button" id="restartButton">再玩一次</button>
+    </div>
+    <div class="audio-control" id="audioControl" title="开关背景音乐">🎵</div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correctSound">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="incorrectSound">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 成语数据库
+        const allIdioms = [
+            {
+                question: "比喻做事情有头无尾，半途而废",
+                answer: "虎头蛇尾",
+                options: ["虎头蛇尾", "画蛇添足", "守株待兔", "掩耳盗铃"]
+            },
+            {
+                question: "比喻做事情不要过分，过分了反而不好",
+                answer: "画蛇添足",
+                options: ["画蛇添足", "守株待兔", "掩耳盗铃", "虎头蛇尾"]
+            },
+            {
+                question: "比喻人愚蠢，明明掩盖不住别人耳朵，还自以为别人听不见",
+                answer: "掩耳盗铃",
+                options: ["掩耳盗铃", "守株待兔", "虎头蛇尾", "画蛇添足"]
+            },
+            {
+                question: "比喻死守着老一套，不知变通",
+                answer: "守株待兔",
+                options: ["守株待兔", "虎头蛇尾", "画蛇添足", "掩耳盗铃"]
+            },
+            {
+                question: "比喻人的言行不符合实际情况，自相矛盾",
+                answer: "自相矛盾",
+                options: ["自相矛盾", "异口同声", "欢天喜地", "小心翼翼"]
+            },
+            {
+                question: "形容非常高兴快乐的样子",
+                answer: "欢天喜地",
+                options: ["欢天喜地", "异口同声", "自相矛盾", "小心翼翼"]
+            },
+            {
+                question: "形容说话做事非常谨慎，非常当心",
+                answer: "小心翼翼",
+                options: ["小心翼翼", "欢天喜地", "异口同声", "自相矛盾"]
+            },
+            {
+                question: "比喻大家说的话完全一样",
+                answer: "异口同声",
+                options: ["异口同声", "欢天喜地", "自相矛盾", "小心翼翼"]
+            },
+            {
+                question: "比喻做事情不顾条件，蛮干",
+                answer: "盲人瞎马",
+                options: ["盲人瞎马", "异口同声", "欢天喜地", "小心翼翼"]
+            },
+            {
+                question: "比喻做事情毫无计划，随随便便",
+                answer: "马马虎虎",
+                options: ["马马虎虎", "盲人瞎马", "异口同声", "欢天喜地"]
+            },
+            {
+                question: "比喻说话做事非常谨慎，处处小心",
+                answer: "如履薄冰",
+                options: ["如履薄冰", "马马虎虎", "盲人瞎马", "异口同声"]
+            },
+            {
+                question: "比喻做事情非常仔细，一点也不马虎",
+                answer: "一丝不苟",
+                options: ["一丝不苟", "如履薄冰", "马马虎虎", "盲人瞎马"]
+            },
+            // ... 这里可以继续添加更多成语
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let gameQuestions = [];
+        const questionsPerGame = 10;
+
+        const scoreElement = document.getElementById('score');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const nextButton = document.getElementById('nextButton');
+        const restartButton = document.getElementById('restartButton');
+        const progressBar = document.getElementById('progress');
+        const bgMusic = document.getElementById('bgMusic');
+        const correctSound = document.getElementById('correctSound');
+        const incorrectSound = document.getElementById('incorrectSound');
+        const audioControl = document.getElementById('audioControl');
+
+        let isMusicPlaying = false;
+
+        audioControl.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                audioControl.textContent = '🔇';
+            } else {
+                bgMusic.play();
+                audioControl.textContent = '🎵';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startNewGame() {
+            currentQuestion = 0;
+            score = 0;
+            scoreElement.textContent = score;
+            gameQuestions = shuffleArray([...allIdioms]).slice(0, questionsPerGame);
+            restartButton.style.display = 'none';
+            showQuestion();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questionsPerGame) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function showQuestion() {
+            const idiom = gameQuestions[currentQuestion];
+            questionElement.textContent = idiom.question;
+            optionsElement.innerHTML = '';
+            updateProgress();
+            
+            const shuffledOptions = shuffleArray([...idiom.options]);
+            
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsElement.appendChild(button);
+            });
+
+            feedbackElement.textContent = '';
+            feedbackElement.className = 'feedback';
+            nextButton.style.display = 'none';
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = gameQuestions[currentQuestion].answer;
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.disabled = true);
+
+            if (selectedAnswer === correctAnswer) {
+                score += 10;
+                scoreElement.textContent = score;
+                feedbackElement.textContent = '答对了！太棒了！';
+                feedbackElement.className = 'feedback correct';
+                correctSound.play();
+            } else {
+                feedbackElement.textContent = `答错了！正确答案是：${correctAnswer}`;
+                feedbackElement.className = 'feedback incorrect';
+                incorrectSound.play();
+            }
+
+            nextButton.style.display = 'inline-block';
+        }
+
+        nextButton.onclick = () => {
+            currentQuestion++;
+            if (currentQuestion < questionsPerGame) {
+                showQuestion();
+            } else {
+                questionElement.textContent = `游戏结束！你的最终得分是：${score}分`;
+                optionsElement.innerHTML = '';
+                feedbackElement.textContent = score === 100 ? '太厉害了，满分！' : '继续加油哦！';
+                nextButton.style.display = 'none';
+                restartButton.style.display = 'inline-block';
+                progressBar.style.width = '100%';
+            }
+        };
+
+        restartButton.onclick = startNewGame;
+
+        // 开始游戏
+        startNewGame();
+    </script>
+</body>
+</html> 
