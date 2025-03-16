@@ -154,18 +154,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .audio-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
         .restart-button {
             background-color: #722ed1;
             color: white;
@@ -594,23 +582,6 @@
         const nextButton = document.getElementById('nextButton');
         const restartButton = document.getElementById('restartButton');
         const progressBar = document.getElementById('progress');
-        const bgMusic = document.getElementById('bgMusic');
-        const correctSound = document.getElementById('correctSound');
-        const incorrectSound = document.getElementById('incorrectSound');
-        const audioControl = document.getElementById('audioControl');
-
-        let isMusicPlaying = false;
-
-        audioControl.addEventListener('click', () => {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                audioControl.textContent = '🔇';
-            } else {
-                bgMusic.play();
-                audioControl.textContent = '🎵';
-            }
-            isMusicPlaying = !isMusicPlaying;
-        });
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -665,11 +636,9 @@
                 scoreElement.textContent = score;
                 feedbackElement.textContent = '答对了！太棒了！';
                 feedbackElement.className = 'feedback correct';
-                correctSound.play();
             } else {
                 feedbackElement.textContent = `答错了！正确答案是：${correctAnswer}`;
                 feedbackElement.className = 'feedback incorrect';
-                incorrectSound.play();
             }
 
             nextButton.style.display = 'inline-block';
