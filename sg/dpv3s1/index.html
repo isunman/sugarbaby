@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名人名言卡片</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap');
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            font-family: 'ZCOOL XiaoWei', serif;
+        }
+        
+        .card {
+            width: 350px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+        }
+        
+        .chinese {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .author {
+            text-align: right;
+            font-size: 18px;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+        
+        .english {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: rgba(0,0,0,0.7);
+            border-top: 1px dashed rgba(0,0,0,0.1);
+            padding-top: 20px;
+        }
+        
+        /* 卡片颜色方案 */
+        .card1 {
+            background-color: #FFF5E6;
+            color: #8B4513;
+        }
+        
+        .card2 {
+            background-color: #E6F3FF;
+            color: #1A3E72;
+        }
+        
+        .card3 {
+            background-color: #FFE6E6;
+            color: #8B0000;
+        }
+        
+        .card4 {
+            background-color: #E6FFE6;
+            color: #006400;
+        }
+        
+        .card5 {
+            background-color: #F0E6FF;
+            color: #4B0082;
+        }
+        
+        h1 {
+            width: 100%;
+            text-align: center;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>名人名言集锦</h1>
+    
+    <div class="card card1">
+        <div class="chinese">
+            学而不思则罔，思而不学则殆。
+        </div>
+        <div class="author">
+            —— 孔子
+        </div>
+        <div class="english">
+            "Learning without thought is labor lost; thought without learning is perilous."
+        </div>
+    </div>
+    
+    <div class="card card2">
+        <div class="chinese">
+            天将降大任于斯人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为。
+        </div>
+        <div class="author">
+            —— 孟子
+        </div>
+        <div class="english">
+            "When Heaven is about to confer a great office on any man, it first exercises his mind with suffering, and his sinews and bones with toil; it exposes his body to hunger, and subjects him to extreme poverty; and it confounds his undertakings. In all these ways it stimulates his mind, hardens his nature, and supplies his incompetencies."
+        </div>
+    </div>
+    
+    <div class="card card3">
+        <div class="chinese">
+            知之为知之，不知为不知，是知也。
+        </div>
+        <div class="author">
+            —— 孔子
+        </div>
+        <div class="english">
+            "To know what you know and what you do not know, that is true knowledge."
+        </div>
+    </div>
+    
+    <div class="card card4">
+        <div class="chinese">
+            三人行，必有我师焉。择其善者而从之，其不善者而改之。
+        </div>
+        <div class="author">
+            —— 孔子
+        </div>
+        <div class="english">
+            "When I walk along with two others, they may serve me as my teachers. I will select their good qualities and follow them, their bad qualities and avoid them."
+        </div>
+    </div>
+    
+    <div class="card card5">
+        <div class="chinese">
+            不积跬步，无以至千里；不积小流，无以成江海。
+        </div>
+        <div class="author">
+            —— 荀子
+        </div>
+        <div class="english">
+            "Without accumulating small steps, one cannot reach a thousand miles; without accumulating small streams, one cannot form rivers and seas."
+        </div>
+    </div>
+    
+    <div class="card card1">
+        <div class="chinese">
+            成功的秘诀在于始终如一地忠于目标。
+        </div>
+        <div class="author">
+            —— 本杰明·迪斯雷利
+        </div>
+        <div class="english">
+            "The secret of success is constancy to purpose."
+        </div>
+    </div>
+    
+    <div class="card card2">
+        <div class="chinese">
+            生活就像骑自行车，为了保持平衡，你必须不断前进。
+        </div>
+        <div class="author">
+            —— 阿尔伯特·爱因斯坦
+        </div>
+        <div class="english">
+            "Life is like riding a bicycle. To keep your balance, you must keep moving."
+        </div>
+    </div>
+    
+    <div class="card card3">
+        <div class="chinese">
+            世界上最快乐的事，莫过于为理想而奋斗。
+        </div>
+        <div class="author">
+            —— 苏格拉底
+        </div>
+        <div class="english">
+            "The happiest thing in the world is to struggle for the ideal."
+        </div>
+    </div>
+    
+    <div class="card card4">
+        <div class="chinese">
+            不要问你的国家能为你做什么，而要问你能为你的国家做什么。
+        </div>
+        <div class="author">
+            —— 约翰·F·肯尼迪
+        </div>
+        <div class="english">
+            "Ask not what your country can do for you — ask what you can do for your country."
+        </div>
+    </div>
+    
+    <div class="card card5">
+        <div class="chinese">
+            我们最大的弱点在于放弃。成功的必然之路就是不断的重来一次。
+        </div>
+        <div class="author">
+            —— 托马斯·爱迪生
+        </div>
+        <div class="english">
+            "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time."
+        </div>
+    </div>
+</body>
+</html>
