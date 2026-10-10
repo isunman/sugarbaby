@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>坏情绪的多米诺骨牌效应</title>
+  <title>坏情绪的多米诺骨牌效应（手机版优化）</title>
   <style>
     :root {
       --bg: #090d14;
       --panel: rgba(255,255,255,0.05);
-      --panel-2: rgba(255,255,255,0.08);
       --text: #f5f7fb;
       --muted: #bac4d6;
       --red: #ff3b30;
       --red2: #ff6a5c;
-      --gold: #f8c66c;
       --line: rgba(255,255,255,0.12);
       --shadow: 0 20px 50px rgba(0,0,0,.42);
     }
@@ -26,7 +24,7 @@
       color: var(--text);
       background:
         radial-gradient(circle at 20% 15%, rgba(255,59,48,.15), transparent 26%),
-        radial-gradient(circle at 80% 25%, rgba(248,198,108,.08), transparent 24%),
+        radial-gradient(circle at 80% 25%, rgba(255,255,255,.05), transparent 24%),
         linear-gradient(180deg, #101722 0%, #0b1018 48%, #06080d 100%);
       overflow-x: hidden;
     }
@@ -113,7 +111,7 @@
 
     .stage {
       position: relative;
-      padding: 30px 22px 22px;
+      padding: 28px 20px 22px;
       overflow: hidden;
       min-height: 560px;
       background:
@@ -124,7 +122,7 @@
     .hint {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
-      gap: 20px;
+      gap: 18px;
       margin-bottom: 18px;
     }
     .hint .card {
@@ -138,9 +136,15 @@
     }
     .hint strong { color: #fff; }
 
+    .domino-area {
+      position: relative;
+      height: 340px;
+      margin: 14px 0 8px;
+    }
+
     .floor {
       position: absolute;
-      left: 0; right: 0; bottom: 132px;
+      left: 0; right: 0; bottom: 126px;
       height: 160px;
       background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.05) 25%, rgba(255,255,255,.04) 26%, rgba(255,255,255,.03) 36%, rgba(255,255,255,.02) 100%);
       transform: perspective(900px) rotateX(66deg);
@@ -149,34 +153,19 @@
       pointer-events: none;
     }
 
-    .domino-area {
-      position: relative;
-      height: 330px;
-      margin: 12px 0 4px;
-    }
-
     .domino {
-      --w: 82px;
-      --h: 210px;
+      --w: 88px;
+      --h: 218px;
       position: absolute;
       bottom: 46px;
       width: var(--w);
       height: var(--h);
       border-radius: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      font-size: clamp(20px, 2vw, 32px);
-      font-weight: 900;
-      letter-spacing: .06em;
-      transform-origin: bottom left;
-      box-shadow: 0 18px 32px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.08);
-      user-select: none;
+      box-shadow: 0 18px 32px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08);
+      transform-origin: bottom left;
       overflow: hidden;
+      user-select: none;
     }
 
     .domino::before {
@@ -187,39 +176,51 @@
       pointer-events: none;
     }
 
-    .domino small {
-      writing-mode: horizontal-tb;
+    .inner {
       position: absolute;
-      bottom: 12px;
-      left: 10px;
-      right: 10px;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 8px 12px;
+      text-align: center;
+    }
+
+    .label {
+      font-size: clamp(22px, 2vw, 34px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: .02em;
+      white-space: pre-line;
+      text-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-top: 14px;
+      opacity: .85;
+    }
+
+    .desc {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 10px;
       font-size: 11px;
       line-height: 1.35;
-      letter-spacing: 0;
-      color: rgba(255,255,255,.84);
       font-weight: 600;
-      opacity: .9;
+      color: rgba(255,255,255,.85);
     }
 
-    .d1 { left: 4%;  background: linear-gradient(180deg, #ff5d51, #b11d17); color: #fff; }
+    .d1 { left: 4%;  background: linear-gradient(180deg, #ff5d51, #b11d17); }
     .d2 { left: 18%; background: linear-gradient(180deg, #595f68, #2c3138); }
-    .d3 { left: 32%; background: linear-gradient(180deg, #656c75, #313740); }
-    .d4 { left: 47%; background: linear-gradient(180deg, #6b727a, #343a42); }
-    .d5 { left: 63%; background: linear-gradient(180deg, #747b85, #393f49); }
-    .d6 { left: 79%; width: 110px; height: 250px; background: linear-gradient(180deg, #7a818b, #2e333b); font-size: clamp(24px, 2.1vw, 36px); }
-
-    .domino .icon {
-      position: absolute;
-      inset: auto 0 48px 0;
-      writing-mode: horizontal-tb;
-      text-align: center;
-      font-size: 34px;
-      opacity: .8;
-      filter: grayscale(.2);
-    }
+    .d3 { left: 33%; background: linear-gradient(180deg, #656c75, #313740); }
+    .d4 { left: 48%; background: linear-gradient(180deg, #6b727a, #343a42); }
+    .d5 { left: 64%; background: linear-gradient(180deg, #747b85, #393f49); }
+    .d6 { left: 79%; width: 116px; height: 256px; background: linear-gradient(180deg, #7a818b, #2e333b); }
 
     .domino.shake { animation: dangerPulse .8s ease-in-out infinite alternate; }
-
     @keyframes dangerPulse {
       0% { box-shadow: 0 0 0 rgba(255,59,48,0), 0 18px 32px rgba(0,0,0,.36); }
       100% { box-shadow: 0 0 28px rgba(255,59,48,.18), 0 18px 32px rgba(0,0,0,.42); }
@@ -266,7 +267,7 @@
     .impact {
       position: absolute;
       left: 88%;
-      bottom: 52px;
+      bottom: 56px;
       width: 130px;
       height: 130px;
       border-radius: 50%;
@@ -277,7 +278,6 @@
       pointer-events: none;
     }
     .play .impact { animation: impactFlash 8s ease-in-out infinite; }
-
     @keyframes impactFlash {
       0%, 40% { opacity: 0; transform: translateX(-50%) scale(.4); }
       44% { opacity: .95; transform: translateX(-50%) scale(1.05); }
@@ -308,7 +308,6 @@
     .particles span:nth-child(4) { animation-delay: .18s; }
     .particles span:nth-child(5) { animation-delay: .04s; }
     .particles span:nth-child(6) { animation-delay: .16s; }
-
     @keyframes debris {
       0%, 41% { opacity: 0; }
       44% { opacity: 1; transform: translate(0,0) rotate(0deg); }
@@ -317,13 +316,28 @@
       100% { opacity: 0; }
     }
 
+    .crack {
+      position: absolute;
+      right: 5%;
+      bottom: 85px;
+      width: 120px;
+      height: 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .crack svg { width: 100%; height: 100%; }
+    .play .crack { animation: crackShow 8s ease-in-out infinite; }
+    @keyframes crackShow {
+      0%, 41% { opacity: 0; transform: scale(.8); }
+      46%, 70% { opacity: .9; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.04); }
+    }
+
     .timeline {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 10px;
-      margin: 2px 4px 18px;
-      position: relative;
-      z-index: 2;
+      margin: 8px 4px 18px;
     }
     .timeline .step {
       text-align: center;
@@ -335,10 +349,16 @@
       border-radius: 14px;
       padding: 10px 8px;
     }
-    .timeline .step span { display: block; color: var(--muted); font-weight: 500; font-size: 12px; margin-top: 5px; }
+    .timeline .step span {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
     .quote {
-      margin-top: 22px;
+      margin-top: 20px;
       padding: 20px 22px;
       border-radius: 22px;
       background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
@@ -348,7 +368,6 @@
       gap: 18px;
       align-items: center;
     }
-
     .quote .big {
       font-size: clamp(24px, 3vw, 46px);
       font-weight: 900;
@@ -362,7 +381,6 @@
       font-size: 15px;
       margin-top: 12px;
     }
-
     .quote .tagbox {
       background: rgba(0,0,0,.18);
       border: 1px solid rgba(255,255,255,.08);
@@ -398,23 +416,6 @@
       line-height: 1.8;
     }
 
-    .crack {
-      position: absolute;
-      right: 5%;
-      bottom: 85px;
-      width: 120px;
-      height: 120px;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .crack svg { width: 100%; height: 100%; }
-    .play .crack { animation: crackShow 8s ease-in-out infinite; }
-    @keyframes crackShow {
-      0%, 41% { opacity: 0; transform: scale(.8); }
-      46%, 70% { opacity: .9; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.04); }
-    }
-
     .pause-all *, .pause-all *::before, .pause-all *::after {
       animation-play-state: paused !important;
     }
@@ -422,24 +423,58 @@
     @media (max-width: 960px) {
       .hint, .quote { grid-template-columns: 1fr; }
       .timeline { grid-template-columns: repeat(3, 1fr); }
-      .domino { --w: 62px; --h: 170px; font-size: 18px; border-radius: 18px; }
-      .d6 { width: 82px; height: 200px; }
-      .domino .icon { font-size: 24px; inset: auto 0 42px 0; }
+      .domino { --w: 72px; --h: 190px; border-radius: 18px; }
+      .label { font-size: 19px; }
+      .icon { font-size: 24px; margin-top: 12px; }
+      .d6 { width: 92px; height: 220px; }
       .stage { min-height: 620px; }
-      .domino-area { height: 270px; }
-      .floor { bottom: 190px; }
+      .domino-area { height: 300px; }
+      .floor { bottom: 165px; }
     }
 
     @media (max-width: 640px) {
       .page { padding: 10px; }
       .hero { padding: 24px 18px 16px; }
-      .stage { padding: 18px 12px 16px; min-height: 650px; }
+      .stage { padding: 18px 12px 16px; min-height: 680px; }
+      .hint .card { font-size: 14px; padding: 14px; }
+      .domino-area { height: 275px; }
+      .floor { bottom: 182px; }
       .timeline { grid-template-columns: repeat(2, 1fr); }
-      .domino-area { overflow-x: visible; }
-      .domino { --w: 48px; --h: 140px; font-size: 15px; border-radius: 14px; }
-      .d6 { width: 68px; height: 172px; }
-      .footer-note { padding: 0 18px 22px; }
-      .floor { bottom: 210px; }
+
+      .domino {
+        --w: 50px;
+        --h: 145px;
+        border-radius: 14px;
+      }
+      .d1 { left: 1%; }
+      .d2 { left: 13.5%; }
+      .d3 { left: 27%; }
+      .d4 { left: 41.5%; }
+      .d5 { left: 57%; }
+      .d6 { left: 73%; width: 78px; height: 170px; }
+
+      .inner { padding: 10px 5px 8px; }
+      .label {
+        font-size: 13px;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      .icon {
+        font-size: 18px;
+        margin-top: 7px;
+      }
+      .desc {
+        display: none;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .domino { --w: 46px; --h: 136px; }
+      .d6 { width: 72px; height: 160px; }
+      .label { font-size: 12px; }
+      .icon { font-size: 16px; }
+      .domino-area { height: 260px; }
+      .floor { bottom: 186px; }
     }
   </style>
 </head>
@@ -447,9 +482,9 @@
   <div class="page">
     <div class="wrap play" id="app">
       <section class="hero">
-        <div class="eyebrow">警示动画 · HTML 版</div>
+        <div class="eyebrow">警示动画 · 手机版修复版</div>
         <h1>有时候，<span class="red">坏情绪</span>能毁掉所有</h1>
-        <div class="sub">一个没控制住的瞬间，可能引发一连串失控的后果。用“多米诺骨牌”看看坏情绪是如何从一个小触发，逐步推倒关系、生活与机会的。</div>
+        <div class="sub">这个版本已针对手机查看做了优化：骨牌主文字重新排版，小屏幕下自动隐藏次级说明，减少遮挡，更适合直接在手机浏览器中观看。</div>
         <div class="toolbar">
           <button class="primary" id="replayBtn">重播动画</button>
           <button id="pauseBtn">暂停</button>
@@ -465,17 +500,55 @@
         <div class="domino-area">
           <div class="floor"></div>
 
-          <div class="domino d1 shake">坏情绪<small>一个瞬间没控制住</small></div>
-          <div class="domino d2">冲动说话<div class="icon">🗣️</div><small>情绪上头，容易言语伤人</small></div>
-          <div class="domino d3">关系受损<div class="icon">💔</div><small>一句重话，可能留下裂痕</small></div>
-          <div class="domino d4">工作生活受影响<div class="icon">😣</div><small>专注下降，节奏混乱</small></div>
-          <div class="domino d5">错失机会<div class="icon">🚪</div><small>本可把握的机会悄悄溜走</small></div>
-          <div class="domino d6">毁掉重要的东西<div class="icon">🏠</div><small>关系、时间、成果、未来感受</small></div>
+          <div class="domino d1 shake">
+            <div class="inner">
+              <div class="label">坏情绪</div>
+              <div class="desc">一个瞬间没控制住</div>
+            </div>
+          </div>
+
+          <div class="domino d2">
+            <div class="inner">
+              <div class="label">冲动<br>说话</div>
+              <div class="icon">🗣️</div>
+              <div class="desc">情绪上头，容易言语伤人</div>
+            </div>
+          </div>
+
+          <div class="domino d3">
+            <div class="inner">
+              <div class="label">关系<br>受损</div>
+              <div class="icon">💔</div>
+              <div class="desc">一句重话，可能留下裂痕</div>
+            </div>
+          </div>
+
+          <div class="domino d4">
+            <div class="inner">
+              <div class="label">工作生活<br>受影响</div>
+              <div class="icon">😣</div>
+              <div class="desc">专注下降，节奏混乱</div>
+            </div>
+          </div>
+
+          <div class="domino d5">
+            <div class="inner">
+              <div class="label">错失<br>机会</div>
+              <div class="icon">🚪</div>
+              <div class="desc">本可把握的机会悄悄溜走</div>
+            </div>
+          </div>
+
+          <div class="domino d6">
+            <div class="inner">
+              <div class="label">毁掉重要的<br>东西</div>
+              <div class="icon">🏠</div>
+              <div class="desc">关系、时间、成果、未来感受</div>
+            </div>
+          </div>
 
           <div class="impact"></div>
-          <div class="particles">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
+          <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
           <div class="crack">
             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M51 5 L47 32 L60 34 L42 58 L55 61 L39 95" stroke="#FFE4C4" stroke-width="3" stroke-linecap="round"/>
@@ -514,7 +587,7 @@
       </section>
 
       <div class="footer-note">
-        文件说明：这是一个可直接在浏览器打开的单文件 HTML 动画，无需额外依赖。适合本地演示、转发、后续再改造成 GIF / MP4 / 更复杂交互版。
+        文件说明：这是手机版修复后的单文件 HTML 动画。优化点：骨牌主文字改为独立排版，小屏幕下隐藏底部次级文字，减少互相遮挡，适合手机直接打开查看。
       </div>
     </div>
   </div>
